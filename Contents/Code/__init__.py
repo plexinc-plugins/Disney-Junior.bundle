@@ -1,6 +1,7 @@
 PLUGIN_PREFIX = '/video/disneyjunior'
 NAME = 'Disney Junior'
-JSON_URL = 'http://disneyjunior.com/_grill/json/'
+JSON_URL = 'http://disneyjunior.disney.com/_grill/json/'
+SHOWS_URL = JSON_URL + 'video'
 ICON = 'icon-default.jpg'
 ART = 'art-default.jpg'
 
@@ -20,16 +21,16 @@ def MainMenu():
 def Shows():
 
 	oc = ObjectContainer()
-	json_obj = JSON.ObjectFromURL(JSON_URL)
+	json_obj = JSON.ObjectFromURL(SHOWS_URL)
 
 	for show in json_obj['stack'][0]['data']:
 
-		url = show['href']
 		title = show['title']
-		thumb = show['logo']
+		thumb = show['thumb']
+		slug = show['slug']
 
 		oc.add(DirectoryObject(
-			key = Callback(Videos, title=title, thumb=thumb, url=url),
+			key = Callback(Videos, title=title, thumb=thumb, slug=slug),
 			title = title,
 			thumb = Resource.ContentsOfURLWithFallback(thumb)
 		))
@@ -38,11 +39,10 @@ def Shows():
 
 ####################################################################################################
 @route(PLUGIN_PREFIX + '/videos')
-def Videos(title, thumb, url):
+def Videos(title, thumb, slug):
 
 	oc = ObjectContainer(title2=title)
-	json_url = '%s%s/video' % (JSON_URL, url.split('/')[-1])
-	json_obj = JSON.ObjectFromURL(json_url)
+	json_obj = JSON.ObjectFromURL(JSON_URL + slug)
 
 	for group in json_obj['stack']:
 
