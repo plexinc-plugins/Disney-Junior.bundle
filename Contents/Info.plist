@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleIdentifier</key>
 	<string>com.plexapp.plugins.disneyjunior</string>
-	<key>PlexClientPlatforms</key>
-	<string>Android,iOS,Roku,Safari</string>
 	<key>PlexFrameworkVersion</key>
 	<string>2</string>
 	<key>PlexPluginRegions</key>
