@@ -23,9 +23,13 @@ def Shows():
 	oc = ObjectContainer()
 	json_obj = JSON.ObjectFromURL(SHOWS_URL)
 
-	for show in json_obj['stack'][0]['data']:
+	for show in json_obj['stack'][0]['data'][0]['nav_slider']:
 
-		title = show['title']
+		title = show['title'].strip()
+
+		if title == "":
+			continue
+
 		thumb = show['thumb']
 		slug = show['slug']
 
